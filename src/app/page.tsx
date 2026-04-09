@@ -1,65 +1,162 @@
-import Image from "next/image";
-
 export default function Home() {
+  const modelos = [
+    {
+      id: 1,
+      nome: "Cinematografico",
+      descricao:
+        "Tema escuro total, video fullscreen no hero, tipografia serifada elegante. Tons de vinho e dourado. Sensacao de luxo e cinema.",
+      cor: "#C9A96E",
+      corBg: "rgba(201,169,110,0.08)",
+      corBorder: "rgba(201,169,110,0.2)",
+      href: "/modelo-1-cinematografico.html",
+      tags: ["Video Hero", "Parallax", "Tema Escuro", "Scroll Reveal"],
+    },
+    {
+      id: 2,
+      nome: "Galeria Imersiva",
+      descricao:
+        "Fundo claro e acolhedor, split layout no hero, timeline central para as etapas, galeria masonry. Aconchego sofisticado.",
+      cor: "#8B2635",
+      corBg: "rgba(139,38,53,0.08)",
+      corBorder: "rgba(139,38,53,0.2)",
+      href: "/modelo-2-galeria-imersiva.html",
+      tags: ["Fundo Claro", "Timeline", "Masonry", "Cards Scroll"],
+    },
+    {
+      id: 3,
+      nome: "Scroll Storytelling",
+      descricao:
+        "Tema escuro, tipografia bold gigante, marquee animado com o menu, cards horizontais. Moderno e impactante.",
+      cor: "#B22234",
+      corBg: "rgba(178,34,52,0.08)",
+      corBorder: "rgba(178,34,52,0.2)",
+      href: "/modelo-3-scroll-storytelling.html",
+      tags: ["Marquee", "Bold Type", "Drag Scroll", "Parallax"],
+    },
+  ];
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
+    <main className="min-h-screen">
+      {/* Header */}
+      <div className="max-w-4xl mx-auto px-6 pt-16 pb-8">
+        <p className="text-xs tracking-[4px] uppercase text-red-500 mb-4">
+          Selecao de Modelos
+        </p>
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
+          Gramado{" "}
+          <span className="text-red-500 font-normal italic">Plazza</span>
+        </h1>
+        <p className="text-zinc-500 text-base leading-relaxed max-w-xl">
+          3 propostas visuais para o site do restaurante. Clique em cada modelo
+          para visualizar com animacoes e interacoes. Escolha 2 favoritos.
+        </p>
+      </div>
+
+      {/* Modelos */}
+      <div className="max-w-4xl mx-auto px-6 pb-12">
+        <div className="flex flex-col gap-6">
+          {modelos.map((m) => (
             <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              key={m.id}
+              href={m.href}
+              className="group block rounded-xl border transition-all duration-500 hover:-translate-y-1"
+              style={{
+                background: m.corBg,
+                borderColor: m.corBorder,
+              }}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              <div className="p-8 md:p-10">
+                <div className="flex items-start justify-between mb-4">
+                  <div>
+                    <span
+                      className="text-xs font-semibold tracking-[3px] uppercase"
+                      style={{ color: m.cor }}
+                    >
+                      Modelo {m.id}
+                    </span>
+                    <h2 className="text-2xl md:text-3xl font-bold mt-1 text-white group-hover:text-zinc-200 transition-colors">
+                      {m.nome}
+                    </h2>
+                  </div>
+                  <div
+                    className="w-10 h-10 rounded-full border flex items-center justify-center opacity-40 group-hover:opacity-100 transition-all group-hover:translate-x-1"
+                    style={{ borderColor: m.cor, color: m.cor }}
+                  >
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </div>
+                <p className="text-zinc-400 text-sm leading-relaxed mb-6 max-w-lg">
+                  {m.descricao}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {m.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-[10px] font-medium tracking-[1px] uppercase px-3 py-1 rounded-full border"
+                      style={{
+                        borderColor: m.corBorder,
+                        color: m.cor,
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </a>
+          ))}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </div>
+
+      {/* Guia */}
+      <div className="max-w-4xl mx-auto px-6 pb-16">
+        <a
+          href="/guia-imagens-cliente.html"
+          className="block rounded-xl border border-zinc-800 bg-zinc-900/50 p-8 hover:border-zinc-700 transition-all group"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="text-xs tracking-[3px] uppercase text-zinc-500">
+                Para o cliente
+              </span>
+              <h3 className="text-lg font-semibold mt-1">
+                Guia de Imagens e Videos
+              </h3>
+              <p className="text-zinc-500 text-sm mt-1">
+                Lista completa do material necessario para montar o site
+              </p>
+            </div>
+            <div className="text-zinc-600 group-hover:text-zinc-400 transition-colors">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" />
+              </svg>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      {/* Footer */}
+      <footer className="border-t border-zinc-900 py-6 text-center">
+        <p className="text-[11px] text-zinc-600 tracking-wider">
+          Gramado Plazza &copy; 2026 &middot; Desenvolvido por DR.TRAFEGO
+        </p>
+      </footer>
+    </main>
   );
 }
