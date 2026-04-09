@@ -128,18 +128,21 @@ nav.scrolled {
 
 .hero-bg.loaded { transform: scale(1); }
 
-.hero-bg::after {
-  content: '🎬 VIDEO: Panorâmica do salão com clientes, câmera lenta, 10-30s OU 📸 Foto principal do salão à noite';
+.hero-bg video {
   position: absolute;
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 14px;
-  color: rgba(255,255,255,0.15);
-  letter-spacing: 2px;
-  text-align: center;
-  max-width: 500px;
-  line-height: 1.6;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(13,13,13,0.7) 0%, rgba(13,13,13,0.5) 60%);
+  z-index: 1;
 }
 
 .hero-content {
@@ -703,7 +706,9 @@ footer p { font-size: 11px; color: rgba(255,255,255,0.25); letter-spacing: 1px; 
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-bg" id="heroBg">
+    <video autoplay muted loop playsinline src="video_restaurante.mp4"></video>
+  </div>
   <div class="hero-content">
     <h1>A experiência que vai marcar sua passagem por <span class="highlight">Gramado</span></h1>
     <div class="hero-sub">
@@ -754,7 +759,7 @@ footer p { font-size: 11px; color: rgba(255,255,255,0.25); letter-spacing: 1px; 
   </div>
   <div class="cards-scroll">
     <div class="etapa-card">
-      <div class="etapa-card-img">📸 Tábua de couvert vista de cima ou 45°</div>
+      <div class="etapa-card-img"><img src="couvert.jpeg" alt="Couvert artesanal" style="width:100%;height:100%;object-fit:cover;"></div>
       <div class="etapa-card-body">
         <div class="etapa-card-num">Etapa 01</div>
         <h3>O Couvert</h3>
@@ -762,7 +767,7 @@ footer p { font-size: 11px; color: rgba(255,255,255,0.25); letter-spacing: 1px; 
       </div>
     </div>
     <div class="etapa-card">
-      <div class="etapa-card-img">📸 Sopa de capeletti com vapor visível</div>
+      <div class="etapa-card-img"><img src="sopa_capeletti.jpeg" alt="Sopa de capeletti" style="width:100%;height:100%;object-fit:cover;"></div>
       <div class="etapa-card-body">
         <div class="etapa-card-num">Etapa 02</div>
         <h3>Sopa de Capeletti</h3>
@@ -770,7 +775,7 @@ footer p { font-size: 11px; color: rgba(255,255,255,0.25); letter-spacing: 1px; 
       </div>
     </div>
     <div class="etapa-card">
-      <div class="etapa-card-img">📸 Carnes na chapa com fumaça/brasa</div>
+      <div class="etapa-card-img"><img src="carnes_chapa.jpeg" alt="Carnes na chapa" style="width:100%;height:100%;object-fit:cover;"></div>
       <div class="etapa-card-body">
         <div class="etapa-card-num">Etapa 03</div>
         <h3>Carnes na Chapa</h3>
@@ -778,7 +783,7 @@ footer p { font-size: 11px; color: rgba(255,255,255,0.25); letter-spacing: 1px; 
       </div>
     </div>
     <div class="etapa-card">
-      <div class="etapa-card-img">📸 Massas: vista de cima com vários pratos OU garçom servindo</div>
+      <div class="etapa-card-img"><img src="masa.jpeg" alt="Rodizio de massas" style="width:100%;height:100%;object-fit:cover;"></div>
       <div class="etapa-card-body">
         <div class="etapa-card-num">Etapa 04</div>
         <h3>Rodízio de Massas</h3>
@@ -794,7 +799,7 @@ footer p { font-size: 11px; color: rgba(255,255,255,0.25); letter-spacing: 1px; 
       </div>
     </div>
     <div class="etapa-card">
-      <div class="etapa-card-img">📸 Panna Cotta com calda de frutas vermelhas</div>
+      <div class="etapa-card-img"><img src="panna_cota.jpeg" alt="Panna Cotta" style="width:100%;height:100%;object-fit:cover;"></div>
       <div class="etapa-card-body">
         <div class="etapa-card-num">Etapa 05</div>
         <h3>Sobremesa</h3>
@@ -807,11 +812,11 @@ footer p { font-size: 11px; color: rgba(255,255,255,0.25); letter-spacing: 1px; 
 <!-- AMBIENTE -->
 <section class="ambiente" id="ambiente">
   <div class="ambiente-grid">
-    <div class="amb-img reveal-scale delay-1">📸 Panorâmica do salão (foto mais aberta e impactante)</div>
-    <div class="amb-img reveal-scale delay-2">📸 Detalhe vermelho/madeira</div>
-    <div class="amb-img reveal-scale delay-3">📸 Luminárias ou velas</div>
-    <div class="amb-img reveal-scale delay-4">📸 Mesa posta elegante</div>
-    <div class="amb-img reveal-scale delay-5">🎬 Vídeo reel do ambiente (15-30s)</div>
+    <div class="amb-img reveal-scale delay-1"><img src="salao.jpeg" alt="Panoramica do salao" style="width:100%;height:100%;object-fit:cover;"></div>
+    <div class="amb-img reveal-scale delay-2"><img src="mesa_posta.jpeg" alt="Mesa posta" style="width:100%;height:100%;object-fit:cover;"></div>
+    <div class="amb-img reveal-scale delay-3"><img src="fachada.jpeg" alt="Fachada do restaurante" style="width:100%;height:100%;object-fit:cover;"></div>
+    <div class="amb-img reveal-scale delay-4"><img src="drink.jpeg" alt="Drink autoral" style="width:100%;height:100%;object-fit:cover;"></div>
+    <div class="amb-img reveal-scale delay-5"><video autoplay muted loop playsinline src="video_pasos_servindo.mp4" style="width:100%;height:100%;object-fit:cover;"></video></div>
   </div>
   <div class="ambiente-text">
     <h2 class="reveal">Um cenário que você vai querer eternizar</h2>

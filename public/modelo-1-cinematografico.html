@@ -147,18 +147,12 @@ nav.scrolled {
 
 .hero-video-placeholder.loaded { transform: scale(1); }
 
-.hero-video-placeholder::after {
-  content: '🎬 VIDEO: Panorâmica do salão, câmera lenta, iluminação intimista (10-30s, horizontal, sem áudio)';
+.hero-video-placeholder video {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 14px;
-  color: var(--gold);
-  opacity: 0.4;
-  text-align: center;
-  max-width: 500px;
-  line-height: 1.6;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .hero-content {
@@ -367,18 +361,16 @@ section { padding: 120px 24px; }
 .etapa-img {
   aspect-ratio: 4/3;
   background: linear-gradient(135deg, var(--wine) 0%, var(--dark) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  color: var(--gold);
-  opacity: 0.5;
-  letter-spacing: 1px;
   border: 1px solid rgba(201,169,110,0.15);
   overflow: hidden;
   transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  text-align: center;
-  padding: 20px;
+}
+
+.etapa-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .etapa-img:hover {
@@ -470,23 +462,19 @@ section { padding: 120px 24px; }
 .ambiente-gallery .img-placeholder {
   aspect-ratio: 1;
   background: linear-gradient(135deg, var(--wine-deep) 0%, var(--dark) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  color: var(--gold);
-  opacity: 0.4;
-  text-transform: uppercase;
-  letter-spacing: 1px;
   overflow: hidden;
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
-  text-align: center;
-  padding: 16px;
+}
+
+.ambiente-gallery .img-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .ambiente-gallery .img-placeholder:hover {
-  opacity: 0.7;
   transform: scale(1.03);
   z-index: 2;
   box-shadow: 0 20px 60px rgba(0,0,0,0.5);
@@ -690,7 +678,9 @@ footer p { font-size: 12px; color: rgba(255,248,240,0.3); letter-spacing: 1px; }
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-video-placeholder parallax-bg" id="heroBg"></div>
+  <div class="hero-video-placeholder parallax-bg" id="heroBg">
+    <video autoplay muted loop playsinline src="video_restaurante.mp4"></video>
+  </div>
   <div class="hero-content">
     <div class="hero-badge">Gramado, Serra Gaúcha</div>
     <h1>A experiência gastronômica que vai marcar sua passagem por <em>Gramado</em></h1>
@@ -727,7 +717,7 @@ footer p { font-size: 12px; color: rgba(255,248,240,0.3); letter-spacing: 1px; }
     <h2 class="reveal delay-1">Cinco etapas. Uma experiência inesquecível.</h2>
 
     <div class="etapa reveal">
-      <div class="etapa-img reveal-left">📸 Tábua com pão caseiro, salame, queijo, azeitona, ovo de codorna. Vista de cima ou 45°</div>
+      <div class="etapa-img reveal-left"><img src="couvert.jpeg" alt="Couvert artesanal com pão caseiro, salame, queijo, azeitona e ovo de codorna"></div>
       <div class="etapa-content reveal-right">
         <div class="etapa-number">01</div>
         <h3 class="etapa-title">O Couvert</h3>
@@ -736,7 +726,7 @@ footer p { font-size: 12px; color: rgba(255,248,240,0.3); letter-spacing: 1px; }
     </div>
 
     <div class="etapa reveal">
-      <div class="etapa-img reveal-right">📸 Sopa de capeletti servida, com vapor visível. Close no prato, fundo desfocado</div>
+      <div class="etapa-img reveal-right"><img src="sopa_capeletti.jpeg" alt="Sopa de capeletti servida quente"></div>
       <div class="etapa-content reveal-left">
         <div class="etapa-number">02</div>
         <h3 class="etapa-title">Sopa de Capeletti</h3>
@@ -745,7 +735,7 @@ footer p { font-size: 12px; color: rgba(255,248,240,0.3); letter-spacing: 1px; }
     </div>
 
     <div class="etapa reveal">
-      <div class="etapa-img reveal-left">📸 Entrecôt e frango na chapa com polenta e queijo grelhado. Fumaça/brasa valoriza</div>
+      <div class="etapa-img reveal-left"><img src="carnes_chapa.jpeg" alt="Entrecot e frango na chapa com polenta e queijo grelhado"></div>
       <div class="etapa-content reveal-right">
         <div class="etapa-number">03</div>
         <h3 class="etapa-title">Carnes na Chapa</h3>
@@ -754,7 +744,7 @@ footer p { font-size: 12px; color: rgba(255,248,240,0.3); letter-spacing: 1px; }
     </div>
 
     <div class="etapa reveal">
-      <div class="etapa-img reveal-right">📸 Vários pratos de massa na mesa (vista de cima) OU garçom servindo. A FOTO MAIS IMPORTANTE</div>
+      <div class="etapa-img reveal-right"><img src="rodizio_massas.jpeg" alt="Rodizio de massas artesanais"></div>
       <div class="etapa-content reveal-left">
         <div class="etapa-number">04</div>
         <h3 class="etapa-title">Rodízio de Massas à Vontade</h3>
@@ -771,7 +761,7 @@ footer p { font-size: 12px; color: rgba(255,248,240,0.3); letter-spacing: 1px; }
     </div>
 
     <div class="etapa reveal">
-      <div class="etapa-img reveal-left">📸 Panna Cotta com calda vermelha. Close elegante mostrando textura cremosa</div>
+      <div class="etapa-img reveal-left"><img src="panna_cota.jpeg" alt="Panna Cotta com calda de frutas vermelhas"></div>
       <div class="etapa-content reveal-right">
         <div class="etapa-number">05</div>
         <h3 class="etapa-title">Sobremesa</h3>
@@ -785,11 +775,11 @@ footer p { font-size: 12px; color: rgba(255,248,240,0.3); letter-spacing: 1px; }
 <section class="ambiente">
   <div class="container">
     <div class="ambiente-gallery">
-      <div class="img-placeholder reveal-scale delay-1">📸 Foto panorâmica do salão (a mais aberta e bonita que tiver)</div>
-      <div class="img-placeholder reveal-scale delay-2">📸 Mesa posta com taças e talheres</div>
-      <div class="img-placeholder reveal-scale delay-3">📸 Close nas luminárias/velas</div>
-      <div class="img-placeholder reveal-scale delay-4">📸 Detalhe da decoração em vermelho/madeira</div>
-      <div class="img-placeholder reveal-scale delay-5">📸 Bar ou drink autoral sendo servido</div>
+      <div class="img-placeholder reveal-scale delay-1"><img src="salao.jpeg" alt="Vista panoramica do salao"></div>
+      <div class="img-placeholder reveal-scale delay-2"><img src="mesa_posta.jpeg" alt="Mesa posta com tacas e talheres"></div>
+      <div class="img-placeholder reveal-scale delay-3"><img src="fachada.jpeg" alt="Fachada do restaurante"></div>
+      <div class="img-placeholder reveal-scale delay-4"><img src="drink.jpeg" alt="Drink autoral"></div>
+      <div class="img-placeholder reveal-scale delay-5"><img src="salada.jpg" alt="Salada"></div>
     </div>
     <div class="eyebrow reveal">O Ambiente</div>
     <h2 class="reveal delay-1">Um cenário que você vai querer eternizar</h2>
