@@ -10,7 +10,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Gramado Plazza | Modelos de Site",
-  description: "Selecao de modelos visuais para o site do Gramado Plazza",
+  description: "Seleção de modelos visuais para o site do Gramado Plazza",
 };
 
 export default function RootLayout({

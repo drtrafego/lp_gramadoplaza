@@ -2,14 +2,14 @@ export default function Home() {
   const modelos = [
     {
       id: 1,
-      nome: "Cinematografico",
+      nome: "Cinematográfico",
       descricao:
-        "Tema escuro total, video fullscreen no hero, tipografia serifada elegante. Tons de vinho e dourado. Sensacao de luxo e cinema.",
+        "Tema escuro total, vídeo fullscreen no hero, tipografia serifada elegante. Tons de vinho e dourado. Sensação de luxo e cinema.",
       cor: "#C9A96E",
       corBg: "rgba(201,169,110,0.08)",
       corBorder: "rgba(201,169,110,0.2)",
       href: "/modelo-1-cinematografico.html",
-      tags: ["Video Hero", "Parallax", "Tema Escuro", "Scroll Reveal"],
+      tags: ["Vídeo Hero", "Parallax", "Tema Escuro", "Scroll Reveal"],
     },
     {
       id: 2,
@@ -40,7 +40,7 @@ export default function Home() {
       {/* Header */}
       <div className="max-w-4xl mx-auto px-6 pt-16 pb-8">
         <p className="text-xs tracking-[4px] uppercase text-red-500 mb-4">
-          Selecao de Modelos
+          Seleção de Modelos
         </p>
         <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
           Gramado{" "}
@@ -48,7 +48,7 @@ export default function Home() {
         </h1>
         <p className="text-zinc-500 text-base leading-relaxed max-w-xl">
           3 propostas visuais para o site do restaurante. Clique em cada modelo
-          para visualizar com animacoes e interacoes. Escolha 2 favoritos.
+          para visualizar com animações e interações. Escolha 2 favoritos.
         </p>
       </div>
 
@@ -129,10 +129,10 @@ export default function Home() {
                 Para o cliente
               </span>
               <h3 className="text-lg font-semibold mt-1">
-                Guia de Imagens e Videos
+                Guia de Imagens e Vídeos
               </h3>
               <p className="text-zinc-500 text-sm mt-1">
-                Lista completa do material necessario para montar o site
+                Lista completa do material necessário para montar o site
               </p>
             </div>
             <div className="text-zinc-600 group-hover:text-zinc-400 transition-colors">
