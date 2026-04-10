@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const inter = Inter({
@@ -10,8 +11,62 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Gramado Plazza | Modelos de Site",
-  description: "Seleção de modelos visuais para o site do Gramado Plazza",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${SITE_NAME} | Restaurante Italiano em Gramado`,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  authors: [{ name: SITE_NAME }],
+  generator: "Next.js",
+  keywords: [
+    "restaurante italiano Gramado",
+    "rodízio de massas Gramado",
+    "sequência italiana Gramado",
+    "onde jantar em Gramado",
+    "melhor restaurante Gramado",
+    "restaurante Bairro Belvedere",
+    "jantar romântico Gramado",
+    "Serra Gaúcha gastronomia",
+  ],
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "pt_BR",
+    siteName: SITE_NAME,
+    title: `${SITE_NAME} | Restaurante Italiano em Gramado`,
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
+    images: [
+      {
+        url: "/salao.jpeg",
+        width: 1200,
+        height: 630,
+        alt: `Salão do ${SITE_NAME} em Gramado`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE_NAME} | Restaurante Italiano em Gramado`,
+    description: SITE_DESCRIPTION,
+    images: ["/salao.jpeg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  category: "restaurant",
 };
 
 const GTM_ID = "GTM-K77FP8ZF";
