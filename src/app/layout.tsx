@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const inter = Inter({
@@ -13,6 +14,8 @@ export const metadata: Metadata = {
   description: "Seleção de modelos visuais para o site do Gramado Plazza",
 };
 
+const GTM_ID = "GTM-K77FP8ZF";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -20,7 +23,28 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className={`${inter.variable} antialiased`}>
-      <body className="min-h-screen bg-[#0A0A0A] text-white">{children}</body>
+      <head>
+        <Script id="gtm-init" strategy="afterInteractive">
+          {`
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','${GTM_ID}');
+          `}
+        </Script>
+      </head>
+      <body className="min-h-screen bg-[#0A0A0A] text-white">
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
+        {children}
+      </body>
     </html>
   );
 }
