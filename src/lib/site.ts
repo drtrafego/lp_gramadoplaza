@@ -28,6 +28,9 @@ export const RESTAURANT = {
   country: "BR",
   phone: "+5554999376608",
   instagram: INSTAGRAM_URL,
+  latitude: -29.3805933,
+  longitude: -50.8715195,
+  areaServed: ["Gramado", "Canela", "Serra Gaúcha", "Rio Grande do Sul"],
   openingHours: {
     days: "Mo-Su",
     opens: "18:00",

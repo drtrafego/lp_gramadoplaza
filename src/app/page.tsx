@@ -65,6 +65,15 @@ const restaurantLd = {
     postalCode: RESTAURANT.postalCode,
     addressCountry: RESTAURANT.country,
   },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: RESTAURANT.latitude,
+    longitude: RESTAURANT.longitude,
+  },
+  areaServed: RESTAURANT.areaServed.map((name) => ({
+    "@type": "City",
+    name,
+  })),
   openingHoursSpecification: [
     {
       "@type": "OpeningHoursSpecification",
@@ -320,6 +329,8 @@ export default function HomePage() {
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   style={{ objectFit: "cover" }}
+                  priority={i === 0}
+                  loading={i === 0 ? "eager" : "lazy"}
                 />
               </div>
               <div
