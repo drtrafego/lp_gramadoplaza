@@ -36,7 +36,7 @@ const playfair = Playfair_Display({
 });
 
 const WHATSAPP_URL = whatsappLink(
-  "Olá! Gostaria de reservar uma mesa no Gramado Plazza."
+  "Olá, tudo bem. Gostaria de fazer uma reserva."
 );
 
 const restaurantLd = {
@@ -246,18 +246,6 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
       />
       <HomeScrollFx />
-
-      <nav className="nav">
-        <div className="logo">Gramado Plazza</div>
-        <a
-          href={WHATSAPP_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="nav-cta"
-        >
-          Reservar Mesa
-        </a>
-      </nav>
 
       <section className="hero">
         <div className="hero-bg parallax-bg">

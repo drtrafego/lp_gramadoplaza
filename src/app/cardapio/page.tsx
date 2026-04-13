@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { DM_Sans, DM_Serif_Display } from "next/font/google";
 import CardapioScrollFx from "@/components/cardapio-scroll-fx";
 import { SITE_NAME, SITE_URL, whatsappLink } from "@/lib/site";
@@ -38,7 +37,7 @@ const dmSerif = DM_Serif_Display({
 });
 
 const WHATSAPP_URL = whatsappLink(
-  "Olá! Vim pelo cardápio do site e gostaria de reservar uma mesa no Gramado Plazza."
+  "Olá, tudo bem. Gostaria de fazer uma reserva."
 );
 
 const menuLd = {
@@ -261,23 +260,6 @@ export default function CardapioPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
       <CardapioScrollFx />
-
-      <nav className="nav">
-        <Link href="/" className="logo">
-          Gramado Plazza
-        </Link>
-        <div className="nav-right">
-          <a href="#sequencia">Menu</a>
-          <a href="#ambiente">Ambiente</a>
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Reservar
-          </a>
-        </div>
-      </nav>
 
       <section className="hero">
         <div className="hero-bg">

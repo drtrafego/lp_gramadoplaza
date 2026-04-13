@@ -54,7 +54,7 @@ function updateLinks() {
   const ct = sanitize(utms.utm_content  ?? 'none')
   const t  = sanitize(utms.utm_term     ?? 'none')
 
-  const msg = `Ola! Gostaria de reservar uma mesa no Gramado Plazza [src=${s}|cmp=${c}|med=${m}|ctt=${ct}|trm=${t}]`
+  const msg = `Olá, tudo bem. Gostaria de fazer uma reserva. [src=${s}|cmp=${c}|med=${m}|ctt=${ct}|trm=${t}]`
   const link = `https://wa.me/${NUMERO}?text=${encodeURIComponent(msg)}`
 
   document.querySelectorAll<HTMLAnchorElement>('a[href*="wa.me"], a[href*="api.whatsapp.com"]').forEach(el => {
