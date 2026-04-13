@@ -13,6 +13,9 @@ export const WHATSAPP_NUMBER =
 export const WHATSAPP_DISPLAY = "+55 54 99937-6608";
 
 export const INSTAGRAM_URL = "https://www.instagram.com/gramadoplazza/";
+export const FACEBOOK_URL = "https://www.facebook.com/gramadoplazza/";
+export const TRIPADVISOR_URL =
+  "https://www.tripadvisor.com/Restaurant_Review-g303536-d28512426-Reviews-Gramado_Plazza-Gramado_State_of_Rio_Grande_do_Sul.html";
 
 export const RESTAURANT = {
   name: "Gramado Plazza",

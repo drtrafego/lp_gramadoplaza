@@ -3,11 +3,13 @@ import Image from "next/image";
 import { Playfair_Display } from "next/font/google";
 import HomeScrollFx from "@/components/home-scroll-fx";
 import {
+  FACEBOOK_URL,
   INSTAGRAM_URL,
   RESTAURANT,
   SITE_DESCRIPTION,
   SITE_NAME,
   SITE_URL,
+  TRIPADVISOR_URL,
   whatsappLink,
 } from "@/lib/site";
 import "./home.css";
@@ -56,7 +58,7 @@ const restaurantLd = {
     `${SITE_URL}/fachada.jpeg`,
     `${SITE_URL}/rodizio_massas.jpeg`,
   ],
-  sameAs: [INSTAGRAM_URL],
+  sameAs: [INSTAGRAM_URL, FACEBOOK_URL, TRIPADVISOR_URL],
   address: {
     "@type": "PostalAddress",
     streetAddress: RESTAURANT.street,
