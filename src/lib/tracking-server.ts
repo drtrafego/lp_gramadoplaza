@@ -151,6 +151,79 @@ export async function sendMetaCAPI(payload: CAPIPayload): Promise<void> {
   }
 }
 
+export interface CAPILeadClickPayload {
+  leadId: string
+  ip?: string
+  userAgent?: string
+  fbc?: string
+  fbp?: string
+  eventSourceUrl?: string
+  testEventCode?: string
+}
+
+export async function sendMetaCAPILeadClick(payload: CAPILeadClickPayload): Promise<void> {
+  const pixelId = process.env.FB_PIXEL_ID || process.env.NEXT_PUBLIC_FB_PIXEL_ID
+  const accessToken = process.env.FB_ACCESS_TOKEN
+
+  if (!pixelId || !accessToken) {
+    console.warn('[CAPI] FB_PIXEL_ID ou FB_ACCESS_TOKEN ausente — evento Lead ignorado.')
+    return
+  }
+
+  try {
+    const { leadId, ip, userAgent, fbc, fbp, eventSourceUrl } = payload
+    const hashedCountry = await hashData('br')
+
+    const body = {
+      data: [
+        {
+          event_name: 'Lead',
+          event_time: Math.floor(Date.now() / 1000),
+          event_id: leadId,
+          action_source: 'website',
+          event_source_url: eventSourceUrl ?? undefined,
+          user_data: {
+            country: [hashedCountry],
+            ...(ip && { client_ip_address: ip }),
+            ...(userAgent && { client_user_agent: userAgent }),
+            ...(fbc && { fbc }),
+            ...(fbp && { fbp }),
+            external_id: leadId,
+          },
+          custom_data: {
+            content_name: 'Lead WhatsApp Gramado Plazza',
+            value: 0,
+            currency: 'BRL',
+          },
+        },
+      ],
+      ...(payload.testEventCode && { test_event_code: payload.testEventCode }),
+    }
+
+    const url = `https://graph.facebook.com/v25.0/${pixelId}/events?access_token=${accessToken}`
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+
+    if (!response.ok) {
+      const error = await response.text()
+      console.error('[CAPI] Erro Lead click:', response.status, error)
+      return
+    }
+
+    const result = await response.json()
+    console.log('[CAPI] Lead click enviado:', {
+      leadId,
+      eventsReceived: result.events_received,
+      fbtrace: result.fbtrace_id,
+    })
+  } catch (err) {
+    console.error('[CAPI] Falha inesperada Lead click (isolada):', err)
+  }
+}
+
 export async function sendGA4Event(
   clientId: string,
   eventName: string,

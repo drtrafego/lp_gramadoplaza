@@ -3,7 +3,6 @@
 import { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 
-const NUMERO = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5554999376608'
 const UTM_KEY = '_utm_params'
 
 interface UtmParams {
@@ -55,9 +54,11 @@ function updateLinks() {
   const t  = sanitize(utms.utm_term     ?? 'none')
 
   const msg = `Olá, tudo bem. Gostaria de fazer uma reserva. [src=${s}|cmp=${c}|med=${m}|ctt=${ct}|trm=${t}]`
-  const link = `https://wa.me/${NUMERO}?text=${encodeURIComponent(msg)}`
+  const link = `/obrigado?m=${encodeURIComponent(msg)}`
 
-  document.querySelectorAll<HTMLAnchorElement>('a[href*="wa.me"], a[href*="api.whatsapp.com"]').forEach(el => {
+  document.querySelectorAll<HTMLAnchorElement>(
+    'a[href*="wa.me"], a[href*="api.whatsapp.com"], a[href^="/obrigado"]',
+  ).forEach(el => {
     el.href = link
   })
 }
