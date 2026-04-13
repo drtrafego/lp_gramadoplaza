@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 
-const NUMERO = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5554999999999'
+const NUMERO = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5554999376608'
 const UTM_KEY = '_utm_params'
 
 interface UtmParams {
