@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { DM_Sans, DM_Serif_Display } from "next/font/google";
 import CardapioScrollFx from "@/components/cardapio-scroll-fx";
-import { SITE_NAME, SITE_URL, whatsappLink } from "@/lib/site";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { fetchPlaceReviews } from "@/lib/google-places";
+import LeadForm from "@/components/lead-form";
 
 export const revalidate = 86400;
 import "./cardapio.css";
@@ -38,10 +39,6 @@ const dmSerif = DM_Serif_Display({
   style: ["normal", "italic"],
   display: "swap",
 });
-
-const WHATSAPP_URL = whatsappLink(
-  "Olá, tudo bem. Gostaria de fazer uma reserva."
-);
 
 const menuLd = {
   "@context": "https://schema.org",
@@ -280,12 +277,7 @@ export default async function CardapioPage() {
               massas artesanais, sobremesa e drinks autorais. Tudo servido em
               uma noite só.
             </p>
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-reserve"
-            >
+            <a href="#formulario" className="btn-reserve">
               Reserve pelo WhatsApp
               <span className="arrow" />
             </a>
@@ -463,17 +455,26 @@ export default async function CardapioPage() {
           </h2>
           <p className="reveal delay-1">
             Não deixe o melhor jantar italiano de Gramado de fora do seu
-            roteiro. Fale com a gente pelo WhatsApp e garanta seu horário.
+            roteiro. Preencha e fale com a gente pelo WhatsApp.
           </p>
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-cta-big reveal delay-2"
-          >
+          <a href="#formulario" className="btn-cta-big reveal delay-2">
             <WhatsAppIcon />
-            Reserve sua noite
+            Reservar minha mesa
           </a>
+        </div>
+      </section>
+
+      <section className="formulario-lead" id="formulario">
+        <div className="section-header">
+          <div className="tag reveal">Reserva</div>
+          <h2 className="reveal delay-1">Garanta sua mesa no Gramado Plazza</h2>
+          <p className="form-desc reveal delay-2">
+            Deixe seu nome e WhatsApp. Vamos te redirecionar para o nosso chat
+            pra confirmar data, horário e número de pessoas.
+          </p>
+        </div>
+        <div className="reveal delay-3">
+          <LeadForm variant="cardapio" />
         </div>
       </section>
 
@@ -487,13 +488,7 @@ export default async function CardapioPage() {
           >
             Instagram
           </a>
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            WhatsApp
-          </a>
+          <a href="#formulario">WhatsApp</a>
         </div>
       </footer>
     </main>

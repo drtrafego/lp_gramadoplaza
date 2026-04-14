@@ -1,65 +1,30 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
 import { WHATSAPP_NUMBER } from '@/lib/site'
 
-const DEFAULT_MESSAGE = 'Olá, tudo bem. Gostaria de fazer uma reserva.'
+const DEFAULT_MESSAGE =
+  'Olá, acabei de preencher o formulário no site. Gostaria de fazer uma reserva.'
 const REDIRECT_DELAY_MS = 3000
-
-function readStoredUtms() {
-  try {
-    const raw = localStorage.getItem('_utm_params')
-    if (!raw) return {}
-    const parsed = JSON.parse(raw) as Record<string, string | null>
-    return {
-      utm_source: parsed.utm_source ?? undefined,
-      utm_medium: parsed.utm_medium ?? undefined,
-      utm_campaign: parsed.utm_campaign ?? undefined,
-      utm_content: parsed.utm_content ?? undefined,
-      utm_term: parsed.utm_term ?? undefined,
-    }
-  } catch {
-    return {}
-  }
-}
+const WA_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(DEFAULT_MESSAGE)}`
 
 export default function ObrigadoClient() {
-  const searchParams = useSearchParams()
   const [seconds, setSeconds] = useState(3)
 
   useEffect(() => {
-    const paramMessage = searchParams.get('m')
-    const message = paramMessage && paramMessage.trim().length > 0
-      ? paramMessage
-      : DEFAULT_MESSAGE
-
-    const utms = readStoredUtms()
-
-    fetch('/api/tracking/lead', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(utms),
-      keepalive: true,
-    }).catch(() => {
-      // tracking falhou, mas nunca bloqueia o redirect
-    })
-
-    const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
-
     const countdown = window.setInterval(() => {
       setSeconds(prev => (prev > 0 ? prev - 1 : 0))
     }, 1000)
 
     const redirect = window.setTimeout(() => {
-      window.location.href = waUrl
+      window.location.href = WA_URL
     }, REDIRECT_DELAY_MS)
 
     return () => {
       window.clearInterval(countdown)
       window.clearTimeout(redirect)
     }
-  }, [searchParams])
+  }, [])
 
   return (
     <div className="relative z-10 mx-auto flex max-w-xl flex-col items-center text-center">
@@ -112,9 +77,7 @@ export default function ObrigadoClient() {
       <p className="mt-10 text-xs text-[#FFF8F0]/45">
         Se não for redirecionado automaticamente,{' '}
         <a
-          href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-            searchParams.get('m') || DEFAULT_MESSAGE,
-          )}`}
+          href={WA_URL}
           className="underline decoration-[#C9A96E]/60 underline-offset-4 transition hover:text-[#C9A96E]"
         >
           clique aqui

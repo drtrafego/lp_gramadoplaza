@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import { Suspense } from "react"
 import { Playfair_Display } from "next/font/google"
 import ObrigadoClient from "./obrigado-client"
 
@@ -33,9 +32,7 @@ export default function ObrigadoPage() {
             "radial-gradient(circle at 50% 40%, rgba(201,169,110,0.08) 0%, transparent 55%)",
         }}
       />
-      <Suspense fallback={null}>
-        <ObrigadoClient />
-      </Suspense>
+      <ObrigadoClient />
     </main>
   )
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Playfair_Display } from "next/font/google";
 import HomeScrollFx from "@/components/home-scroll-fx";
+import LeadForm from "@/components/lead-form";
 import {
   FACEBOOK_URL,
   INSTAGRAM_URL,
@@ -277,12 +278,7 @@ export default async function HomePage() {
             na chapa, drinks autorais e sobremesa. Em um ambiente onde cada
             detalhe foi pensado para encantar.
           </p>
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary"
-          >
+          <a href="#formulario" className="btn-primary">
             <WhatsAppIcon />
             Fale conosco pelo WhatsApp
           </a>
@@ -459,17 +455,28 @@ export default async function HomePage() {
           <h2 className="reveal">Sua mesa está esperando</h2>
           <p className="reveal delay-1">
             Não deixe o melhor jantar italiano de Gramado de fora do seu
-            roteiro. Fale com a gente pelo WhatsApp e garanta seu horário.
+            roteiro. Preencha e fale com a gente pelo WhatsApp.
           </p>
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary reveal delay-2"
-          >
+          <a href="#formulario" className="btn-primary reveal delay-2">
             <WhatsAppIcon />
-            Fale conosco e reserve sua noite
+            Reservar minha mesa
           </a>
+        </div>
+      </section>
+
+      <section className="formulario-lead" id="formulario">
+        <div className="container">
+          <div className="eyebrow reveal">Reserva</div>
+          <h2 className="reveal delay-1">
+            Garanta sua mesa no Gramado Plazza
+          </h2>
+          <p className="form-desc reveal delay-2">
+            Deixe seu nome e WhatsApp. Vamos te redirecionar para o nosso chat
+            pra confirmar data, horário e número de pessoas.
+          </p>
+          <div className="reveal delay-3">
+            <LeadForm variant="home" />
+          </div>
         </div>
       </section>
 

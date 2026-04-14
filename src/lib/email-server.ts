@@ -3,7 +3,7 @@ import nodemailer from 'nodemailer'
 export interface LeadEmailPayload {
   leadId: number | string
   name: string
-  email: string
+  email?: string
   whatsapp: string
   utm_source?: string
   utm_medium?: string
@@ -85,11 +85,12 @@ function buildHtml(lead: LeadEmailPayload): string {
         <tr>
           <td style="background:#111111;padding:8px 32px 24px;">
             <table width="100%" cellpadding="0" cellspacing="0" style="background:#0d0d0d;border:1px solid rgba(255,255,255,0.07);border-radius:12px;overflow:hidden;">
+              ${lead.email ? `
               <tr>
                 <td style="padding:8px 12px;color:#6b7280;font-size:13px;">E-mail</td>
                 <td style="padding:8px 12px;"><a href="mailto:${lead.email}" style="color:#B22234;font-size:13px;text-decoration:none;">${lead.email}</a></td>
               </tr>
-              <tr style="border-top:1px solid rgba(255,255,255,0.05);">
+              <tr style="border-top:1px solid rgba(255,255,255,0.05);">` : '<tr>'}
                 <td style="padding:8px 12px;color:#6b7280;font-size:13px;">WhatsApp</td>
                 <td style="padding:8px 12px;"><a href="${whatsappLink}" style="color:#B22234;font-size:13px;text-decoration:none;">${lead.whatsapp}</a></td>
               </tr>

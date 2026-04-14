@@ -7,7 +7,7 @@ import { sendLeadEmail } from '@/lib/email-server'
 
 const ContactSchema = z.object({
   name: z.string().min(2, 'Nome muito curto').max(120),
-  email: z.string().email('E-mail invalido'),
+  email: z.string().email('E-mail invalido').optional().or(z.literal('')),
   whatsapp: z.string().min(10, 'Telefone invalido').max(20),
   utm_source: z.string().optional(),
   utm_medium: z.string().optional(),
