@@ -114,9 +114,20 @@ Fluxo:
 2. Retorna `rating`, `userRatingCount`, `googleMapsUri`, e até 5 reviews
 3. Filtra reviews com `rating >= 4`
 4. Trunca texto em 260 caracteres preservando palavras
-5. Renderiza badge `4,5 ★★★★★ 424 AVALIAÇÕES NO GOOGLE` + 3 depoimentos com nome real
+5. Renderiza badge de trust + 3 depoimentos com nome real
 
-**Fallback gracioso:** se `GOOGLE_PLACES_API_KEY` não existir ou a API falhar, cai em reviews fixos do TripAdvisor em `site.ts` (constantes `TESTIMONIALS` e `RATING`). O site nunca quebra.
+### Badge com wordmark do Google
+O componente `src/components/google-wordmark.tsx` renderiza a palavra "Google" com as 6 letras nas cores oficiais (G=#4285F4, o=#EA4335, o=#FBBC05, g=#4285F4, l=#34A853, e=#EA4335). É inserido no `.rating-badge` pra servir como selo de confiança visual — consumidor reconhece a marca e associa a 4,5 estrelas a ela. Layout vertical:
+
+```
+    4,5            ← Playfair 44px (destaque principal)
+  ★★★★★           ← amarelo Google #FBBC05, 16px
+  ─────────
+  G o o g l e      ← 22px letras coloridas
+  424 AVALIAÇÕES   ← caps 11px, discreto
+```
+
+**Fallback gracioso:** se `GOOGLE_PLACES_API_KEY` não existir ou a API falhar, cai em reviews fixos do TripAdvisor em `site.ts` (constantes `TESTIMONIALS` e `RATING`). Nesse caso o wordmark desaparece e vira texto simples "X avaliações no TripAdvisor". O site nunca quebra.
 
 **Atenção:** o Google proíbe `AggregateRating` de LocalBusiness no schema (self-serving rule). Por isso o rating aparece apenas como prova social visível, **nunca em JSON-LD**.
 
@@ -135,15 +146,61 @@ Fluxo:
 - `src/lib/tracking-server.ts > sendMetaCAPI`
 - Endpoint: `https://graph.facebook.com/v25.0/{pixelId}/events`
 - Evento: `Lead`
-- PII hasheada em SHA-256: email (se houver), phone, first_name, last_name
-- Campos adicionais: `client_ip_address`, `client_user_agent`, `fbc`, `fbp`, `external_id`
+- PII hasheada em SHA-256:
+  - `em` — email (trim + lowercase, preserva pontos)
+  - `ph` — telefone em E.164 sem `+`. `cleanPhone()` prefixa `55` automaticamente se faltar. Antes `54999376608`, agora `5554999376608`.
+  - `fn` / `ln` / `ct` — passados por `normalizeForHash()` que faz NFD, remove diacríticos (`João` → `joao`), strip de caracteres não-alfanuméricos, trim, lowercase. **Crítico pro Event Match Quality.**
+  - `st` — 2 letras lowercase
+  - `country` — hash de `br`
+- Campos sem hash (conforme [docs](https://developers.facebook.com/docs/marketing-api/conversions-api/parameters)):
+  - `client_ip_address`, `client_user_agent`
+  - `fbc`, `fbp`, `fb_login_id`
+  - `external_id` (= `leadId` do Neon)
+- `event_id = leadId` para deduplicação com o browser Pixel (matched events)
 - `test_event_code` opcional para QA
+
+### Matched events via GTM
+O `LeadForm`, após sucesso do POST em `/api/contact`, empurra no `dataLayer`:
+
+```json
+{
+  "event": "lead_submit",
+  "lead_id": "<uuid do Neon>",
+  "lead_event_id": "<uuid do Neon>",
+  "lead_value": 0,
+  "lead_currency": "BRL",
+  "lead_content_name": "Lead Gramado Plazza"
+}
+```
+
+**Configuração necessária no container GTM** (ação manual do cliente):
+1. Trigger tipo **Custom Event** com event name = `lead_submit`
+2. Data Layer Variables: `lead_event_id`, `lead_id`, `lead_value`, `lead_currency`, `lead_content_name`
+3. Tag **Facebook Pixel**:
+   - Event: `Lead`
+   - Event ID: `{{DLV - lead_event_id}}`
+   - Custom Parameters: `value`, `currency`, `content_name` do dataLayer
+   - Trigger: `lead_submit`
+
+O `lead_event_id` é **exatamente o mesmo** que o server usa no `event_id` do CAPI, então a Meta deduplica browser + server e usa o melhor dos dois sinais. Historicamente isso eleva o EMQ em 20–40%.
+
+O Pixel **não** é instalado direto no layout — o `layout.tsx` só carrega o GTM inline no `<head>`. Esse é um fato importante: em algum momento o Pixel base code chegou a ser adicionado no layout e depois removido (commit `ee81aad`) porque o container GTM do cliente já estava disparando PageView.
 
 ### GA4 Measurement Protocol
 - `src/lib/tracking-server.ts > sendGA4Event` e `sendGA4Lead`
 - Endpoint: `https://www.google-analytics.com/mp/collect`
-- `client_id` extraído do cookie `_ga`, fallback `lead_<leadId>`
-- Evento: `generate_lead` com `currency: BRL`, `value: 0`, `form_name`, `lead_source`
+- Evento: `generate_lead`
+
+Parâmetros enviados:
+- `client_id` — extraído do cookie `_ga` via `extractGaClientId()`. **Fallback:** `generateClientId()` gera `NUMERO.NUMERO` (formato válido GA4) em vez de `lead_<uuid>` que era inválido.
+- `session_id` — gerado via `generateSessionId()` (unix timestamp). **Obrigatório** pro GA4 atribuir sessão; sem isso o evento não aparece no Realtime.
+- `engagement_time_msec: 100` — mínimo pro GA4 considerar sessão engajada. Antes era `1ms` o que filtrava o evento dos relatórios padrão.
+- `currency: BRL`, `value: 0`, `lead_source: 'landing_page'`, `form_name`, `external_id`
+- `User-Agent` header passado pra GA4 reconhecer o dispositivo
+
+**Como testar rapidamente:** usa o endpoint `/debug/mp/collect` (mesmo path, só muda o prefixo) que retorna JSON com `validationMessages`. Se vier `[]`, o payload está 100%. Pro evento aparecer no **DebugView** do GA4, adicionar `debug_mode: true` ao params.
+
+**Como marcar como conversão (ação manual):** Depois que o evento aparece em **Admin → Eventos** (24-48h após o primeiro disparo), liga o toggle **"Marcar como evento-chave"**. Sem isso, o GA4 registra mas não conta como conversão.
 
 ---
 
@@ -206,7 +263,8 @@ src/
 │   ├── sitemap.ts
 │   └── robots.ts
 ├── components/
-│   ├── lead-form.tsx           # Formulário nome + WhatsApp
+│   ├── lead-form.tsx           # Formulário nome + WhatsApp + dataLayer.push
+│   ├── google-wordmark.tsx     # Palavra "Google" com letras coloridas oficiais
 │   └── home-scroll-fx.tsx
 ├── lib/
 │   ├── site.ts                 # Constantes do restaurante, WhatsApp, testimonials, rating
@@ -250,11 +308,18 @@ pnpm start   # serve o build local
 | 2026-04-14 | 193ea79 | Nova página `/sequenciaitaliana` para compartilhar no WhatsApp |
 | 2026-04-14 | 84b2cbd | Foto da panna cotta atualizada (mesmo path) |
 | 2026-04-14 | 9eff8cd | Removido tile de salada da galeria (prato fora do cardápio) |
+| 2026-04-14 | e15e6b0 | README completo com stack, rotas, dinâmica de lead, SEO, envs e histórico |
+| 2026-04-14 | 0b223ca | Google wordmark (letras coloridas) e destaque do rating 4,5 na prova social |
+| 2026-04-14 | f64276e | EMQ do Lead da Meta: phone com `55`, normalização NFD de nomes, fallback com formato válido |
+| 2026-04-14 | ee81aad | Remove Pixel direto do layout, muda pra `dataLayer.push` via GTM custom event `lead_submit` |
+| 2026-04-14 | 27ebf66 | Reduz tamanho do rating badge mantendo destaque do Google wordmark |
+| 2026-04-14 | 0eb6ccc | Fix GA4: `engagement_time_msec` 1→100, session_id obrigatório, client_id fallback válido. Evento passou a aparecer em Tempo Real |
 
 ---
 
 ## Próximos passos planejados (não implementados)
 
-- **Pool rotativo de reviews em Postgres** respeitando TOS de 30 dias do Google Places API, para proteger contra dias em que a API retorna só reviews negativas
-- **Cron diário Vercel** para alimentar o pool (`/api/cron/google-reviews`)
+- **Pool rotativo de reviews em Postgres** respeitando TOS de 30 dias do Google Places API, para proteger contra dias em que a API retorna só reviews negativas. Tabela nova `google_reviews` no mesmo Neon, cron diário no Vercel (`/api/cron/google-reviews`) que faz fetch + upsert + prune de entries > 30 dias.
+- **Configuração da tag Pixel no GTM** pra fechar matched events com o `dataLayer.push` que o `LeadForm` já dispara (ação do cliente, veja seção "Matched events via GTM")
+- **Marcar `generate_lead` como evento-chave no GA4** (ação do cliente, só possível 24-48h depois do primeiro disparo)
 - **Briefing de SEO local off-page** para o squad `/social` e `/analista` (GBP ativo, coleta de reviews reais, citations)
