@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 
 declare global {
   interface Window {
-    fbq?: (...args: unknown[]) => void
+    dataLayer?: Record<string, unknown>[]
   }
 }
 
@@ -98,19 +98,18 @@ export default function LeadForm({ variant = 'home' }: { variant?: 'home' | 'car
       }
 
       const data = (await res.json()) as { success: boolean; leadId?: string | number }
-      const eventID = data.leadId ? String(data.leadId) : `fallback_${Date.now()}`
+      const eventId = data.leadId ? String(data.leadId) : `fallback_${Date.now()}`
 
-      if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-        window.fbq(
-          'track',
-          'Lead',
-          {
-            content_name: 'Lead Gramado Plazza',
-            value: 0,
-            currency: 'BRL',
-          },
-          { eventID },
-        )
+      if (typeof window !== 'undefined') {
+        window.dataLayer = window.dataLayer || []
+        window.dataLayer.push({
+          event: 'lead_submit',
+          lead_id: eventId,
+          lead_event_id: eventId,
+          lead_value: 0,
+          lead_currency: 'BRL',
+          lead_content_name: 'Lead Gramado Plazza',
+        })
       }
 
       router.push('/obrigado')
