@@ -4,17 +4,17 @@ import { Playfair_Display } from "next/font/google";
 import HomeScrollFx from "@/components/home-scroll-fx";
 import {
   FACEBOOK_URL,
-  GOOGLE_REVIEWS_URL,
   INSTAGRAM_URL,
-  RATING,
   RESTAURANT,
   SITE_DESCRIPTION,
   SITE_NAME,
   SITE_URL,
-  TESTIMONIALS,
   TRIPADVISOR_URL,
   whatsappLink,
 } from "@/lib/site";
+import { fetchPlaceReviews } from "@/lib/google-places";
+
+export const revalidate = 86400;
 import "./home.css";
 
 export const metadata: Metadata = {
@@ -244,7 +244,8 @@ function WhatsAppIcon() {
   );
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const reviews = await fetchPlaceReviews();
   return (
     <main className={`gp-home ${playfair.variable}`}>
       <script
@@ -429,12 +430,12 @@ export default function HomePage() {
             Quem já viveu essa experiência não esquece
           </h2>
           <div className="rating-badge reveal delay-2">
-            <span className="rating-value">{RATING.value.toFixed(1).replace(".", ",")}</span>
+            <span className="rating-value">{reviews.rating.toFixed(1).replace(".", ",")}</span>
             <span className="rating-stars" aria-hidden="true">★★★★★</span>
-            <span className="rating-meta">{RATING.count} avaliações no {RATING.source}</span>
+            <span className="rating-meta">{reviews.count} avaliações no {reviews.source}</span>
           </div>
           <div className="depoimentos">
-            {TESTIMONIALS.map((t, i) => (
+            {reviews.testimonials.map((t, i) => (
               <div key={t.name} className={`depoimento reveal delay-${i + 1}`}>
                 <div className="depoimento-stars">★★★★★</div>
                 <p>&ldquo;{t.text}&rdquo;</p>
@@ -443,7 +444,7 @@ export default function HomePage() {
             ))}
           </div>
           <a
-            href={GOOGLE_REVIEWS_URL}
+            href={reviews.mapsUri}
             target="_blank"
             rel="noopener noreferrer"
             className="reviews-cta reveal delay-4"

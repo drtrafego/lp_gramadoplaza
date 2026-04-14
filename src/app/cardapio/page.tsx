@@ -2,14 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { DM_Sans, DM_Serif_Display } from "next/font/google";
 import CardapioScrollFx from "@/components/cardapio-scroll-fx";
-import {
-  GOOGLE_REVIEWS_URL,
-  RATING,
-  SITE_NAME,
-  SITE_URL,
-  TESTIMONIALS,
-  whatsappLink,
-} from "@/lib/site";
+import { SITE_NAME, SITE_URL, whatsappLink } from "@/lib/site";
+import { fetchPlaceReviews } from "@/lib/google-places";
+
+export const revalidate = 86400;
 import "./cardapio.css";
 
 export const metadata: Metadata = {
@@ -255,7 +251,8 @@ function WhatsAppIcon() {
   );
 }
 
-export default function CardapioPage() {
+export default async function CardapioPage() {
+  const reviews = await fetchPlaceReviews();
   return (
     <main className={`gp-cardapio ${dmSans.variable} ${dmSerif.variable}`}>
       <script
@@ -430,13 +427,13 @@ export default function CardapioPage() {
           <div className="tag reveal">Avaliações</div>
           <h2 className="reveal delay-1">Quem já viveu não esquece</h2>
           <div className="rating-badge reveal delay-2">
-            <span className="rating-value">{RATING.value.toFixed(1).replace(".", ",")}</span>
+            <span className="rating-value">{reviews.rating.toFixed(1).replace(".", ",")}</span>
             <span className="rating-stars" aria-hidden="true">★★★★★</span>
-            <span className="rating-meta">{RATING.count} avaliações no {RATING.source}</span>
+            <span className="rating-meta">{reviews.count} avaliações no {reviews.source}</span>
           </div>
         </div>
         <div className="reviews-row">
-          {TESTIMONIALS.map((t, i) => (
+          {reviews.testimonials.map((t, i) => (
             <div key={t.name} className={`review reveal delay-${i + 1}`}>
               <div className="quote">&ldquo;</div>
               <p>{t.text}</p>
@@ -449,7 +446,7 @@ export default function CardapioPage() {
         </div>
         <div className="reviews-footer">
           <a
-            href={GOOGLE_REVIEWS_URL}
+            href={reviews.mapsUri}
             target="_blank"
             rel="noopener noreferrer"
             className="reviews-cta reveal delay-4"
