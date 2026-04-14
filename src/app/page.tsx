@@ -425,7 +425,7 @@ export default async function HomePage() {
             <div className="rating-source">
               {reviews.source === "Google" ? (
                 <>
-                  <GoogleWordmark size={36} />
+                  <GoogleWordmark size={22} />
                   <span className="rating-count">
                     {reviews.count} avaliações
                   </span>
