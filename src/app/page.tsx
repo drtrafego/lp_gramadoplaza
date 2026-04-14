@@ -393,15 +393,6 @@ export default async function HomePage() {
                 style={{ objectFit: "cover" }}
               />
             </div>
-            <div className="img-tile reveal-scale delay-5">
-              <Image
-                src="/salada.jpg"
-                alt="Salada fresca servida no Gramado Plazza"
-                fill
-                sizes="(max-width: 768px) 50vw, 33vw"
-                style={{ objectFit: "cover" }}
-              />
-            </div>
           </div>
           <div className="eyebrow reveal">O Ambiente</div>
           <h2 className="reveal delay-1">
