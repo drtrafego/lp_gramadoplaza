@@ -138,7 +138,7 @@ export default function LeadForm({ variant = 'home' }: { variant?: 'home' | 'car
           inputMode="tel"
           value={whatsapp}
           onChange={(e) => setWhatsapp(formatWhatsapp(e.target.value))}
-          placeholder="(54) 99999-9999"
+          placeholder="(DDD) 00000-0000"
           required
           autoComplete="tel"
           className="w-full rounded-none border border-white/15 bg-white/[0.03] px-5 py-4 text-base text-white placeholder:text-white/35 transition-colors focus:border-[#C9A96E] focus:outline-none"

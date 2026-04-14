@@ -3,7 +3,6 @@ import { z } from 'zod'
 import { getDb } from '@/lib/db'
 import { leads } from '@/lib/schema'
 import { sendMetaCAPI, sendGA4Lead } from '@/lib/tracking-server'
-import { sendLeadEmail } from '@/lib/email-server'
 
 const ContactSchema = z.object({
   name: z.string().min(2, 'Nome muito curto').max(120),
@@ -70,7 +69,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     req.headers.get('referer') ?? req.headers.get('origin') ?? undefined
 
   let leadId: number | string
-  const savedAt = new Date()
 
   try {
     const [row] = await withTimeout(
@@ -100,7 +98,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     sendMetaCAPI({
       leadId,
       name: input.name,
-      email: input.email,
+      email: input.email || undefined,
       whatsapp: input.whatsapp,
       ip,
       fbc,
@@ -120,18 +118,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       userAgent,
       eventSourceUrl,
     }),
-    sendLeadEmail({
-      leadId,
-      name: input.name,
-      email: input.email,
-      whatsapp: input.whatsapp,
-      utm_source: input.utm_source,
-      utm_medium: input.utm_medium,
-      utm_campaign: input.utm_campaign,
-      utm_term: input.utm_term,
-      utm_content: input.utm_content,
-      created_at: savedAt.toISOString(),
-    })
   ])
 
   return NextResponse.json({ success: true, leadId }, { status: 200 })
