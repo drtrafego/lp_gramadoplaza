@@ -3,6 +3,12 @@
 import { useState, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
 
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void
+  }
+}
+
 const UTM_KEYS = [
   'utm_source',
   'utm_medium',
@@ -89,6 +95,22 @@ export default function LeadForm({ variant = 'home' }: { variant?: 'home' | 'car
 
       if (!res.ok) {
         throw new Error('http_' + res.status)
+      }
+
+      const data = (await res.json()) as { success: boolean; leadId?: string | number }
+      const eventID = data.leadId ? String(data.leadId) : `fallback_${Date.now()}`
+
+      if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+        window.fbq(
+          'track',
+          'Lead',
+          {
+            content_name: 'Lead Gramado Plazza',
+            value: 0,
+            currency: 'BRL',
+          },
+          { eventID },
+        )
       }
 
       router.push('/obrigado')

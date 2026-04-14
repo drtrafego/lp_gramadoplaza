@@ -23,9 +23,26 @@ export interface GA4Payload {
   eventSourceUrl?: string
 }
 
+function normalizeForHash(raw: string): string {
+  return raw
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9 ]/gi, '')
+    .trim()
+    .toLowerCase()
+}
+
 async function hashData(raw: string): Promise<string> {
   const { createHash } = await import('crypto')
-  return createHash('sha256').update(raw.trim().toLowerCase()).digest('hex')
+  return createHash('sha256').update(raw).digest('hex')
+}
+
+async function hashNormalized(raw: string): Promise<string> {
+  return hashData(normalizeForHash(raw))
+}
+
+async function hashEmail(raw: string): Promise<string> {
+  return hashData(raw.trim().toLowerCase())
 }
 
 function firstName(fullName: string): string {
@@ -39,7 +56,15 @@ function lastName(fullName: string): string | undefined {
 }
 
 function cleanPhone(phone: string): string {
-  return phone.replace(/\D/g, '')
+  let digits = phone.replace(/\D/g, '')
+  if (digits.startsWith('00')) digits = digits.slice(2)
+  if ((digits.length === 12 || digits.length === 13) && digits.startsWith('55')) {
+    return digits
+  }
+  if (digits.length === 10 || digits.length === 11) {
+    return `55${digits}`
+  }
+  return digits
 }
 
 function normalizeState(state: string): string | undefined {
@@ -82,11 +107,11 @@ export async function sendMetaCAPI(payload: CAPIPayload): Promise<void> {
 
     const [hashedEmail, hashedPhone, hashedFirstName, hashedLastName, hashedCity, hashedState, hashedCountry] =
       await Promise.all([
-        email ? hashData(email) : Promise.resolve(undefined),
+        email ? hashEmail(email) : Promise.resolve(undefined),
         hashData(cleanPhone(whatsapp)),
-        hashData(firstName(name)),
-        lastName(name) ? hashData(lastName(name)!) : Promise.resolve(undefined),
-        payload.city ? hashData(payload.city) : Promise.resolve(undefined),
+        hashNormalized(firstName(name)),
+        lastName(name) ? hashNormalized(lastName(name)!) : Promise.resolve(undefined),
+        payload.city ? hashNormalized(payload.city) : Promise.resolve(undefined),
         payload.state ? (normalizeState(payload.state) ? hashData(normalizeState(payload.state)!) : Promise.resolve(undefined)) : Promise.resolve(undefined),
         hashData('br'),
       ])
