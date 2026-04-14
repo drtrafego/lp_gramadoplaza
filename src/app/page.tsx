@@ -161,7 +161,7 @@ const faqLd = {
       name: "Como faço uma reserva no Gramado Plazza?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "As reservas são feitas pelo WhatsApp +55 54 99937-6608. Basta enviar uma mensagem informando data, horário e número de pessoas.",
+        text: "As reservas são feitas pelo WhatsApp +55 54 9937-6608. Basta enviar uma mensagem informando data, horário e número de pessoas.",
       },
     },
     {
