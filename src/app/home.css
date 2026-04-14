@@ -312,7 +312,7 @@
 }
 
 /* ═══════ SECTIONS ═══════ */
-.gp-home section { padding: 120px 24px; }
+.gp-home section { padding: 88px 24px; }
 .gp-home .container { max-width: 1200px; margin: 0 auto; }
 
 /* ═══════ CONTEXTO ═══════ */
@@ -383,15 +383,15 @@
   font-size: clamp(28px, 4vw, 52px);
   font-weight: 400;
   text-align: center;
-  margin-bottom: 80px;
+  margin-bottom: 56px;
 }
 
 .gp-home .etapa {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  gap: 56px;
   align-items: center;
-  margin-bottom: 100px;
+  margin-bottom: 64px;
 }
 
 .gp-home .etapa.etapa-reverse { direction: rtl; }
@@ -500,7 +500,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 }
 
 .gp-home .ambiente-gallery .img-tile {
@@ -683,7 +683,7 @@
 .gp-home .cta-final {
   background: linear-gradient(180deg, var(--dark) 0%, var(--wine-deep) 100%);
   text-align: center;
-  padding: 160px 24px;
+  padding: 112px 24px;
   position: relative;
   overflow: hidden;
 }
