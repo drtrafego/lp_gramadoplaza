@@ -93,6 +93,16 @@ function extractGaClientId(gaCookie: string): string {
   return gaCookie
 }
 
+function generateClientId(): string {
+  const rand = Math.floor(Math.random() * 2_147_483_647)
+  const ts = Math.floor(Date.now() / 1000)
+  return `${rand}.${ts}`
+}
+
+function generateSessionId(): string {
+  return String(Math.floor(Date.now() / 1000))
+}
+
 export async function sendMetaCAPI(payload: CAPIPayload): Promise<void> {
   const pixelId = process.env.FB_PIXEL_ID || process.env.NEXT_PUBLIC_FB_PIXEL_ID
   const accessToken = process.env.FB_ACCESS_TOKEN
@@ -176,28 +186,45 @@ export async function sendMetaCAPI(payload: CAPIPayload): Promise<void> {
   }
 }
 
+interface GA4SendOptions {
+  clientId: string
+  eventName: string
+  params?: Record<string, unknown>
+  sessionId?: string
+  userAgent?: string
+  ip?: string
+}
+
 export async function sendGA4Event(
-  clientId: string,
-  eventName: string,
+  clientIdOrOptions: string | GA4SendOptions,
+  eventName?: string,
   params: Record<string, unknown> = {}
 ): Promise<void> {
+  const opts: GA4SendOptions =
+    typeof clientIdOrOptions === 'string'
+      ? { clientId: clientIdOrOptions, eventName: eventName ?? '', params }
+      : clientIdOrOptions
+
   const measurementId = process.env.GA_MEASUREMENT_ID
   const apiSecret = process.env.GA_API_SECRET
 
   if (!measurementId || !apiSecret) {
-    console.warn(`[GA4] Measurement ID ou API Secret ausente — evento '${eventName}' ignorado.`)
+    console.warn(`[GA4] Measurement ID ou API Secret ausente — evento '${opts.eventName}' ignorado.`)
     return
   }
 
   try {
+    const sessionId = opts.sessionId || generateSessionId()
     const body = {
-      client_id: clientId,
+      client_id: opts.clientId,
+      non_personalized_ads: false,
       events: [
         {
-          name: eventName,
+          name: opts.eventName,
           params: {
-            engagement_time_msec: 1,
-            ...params,
+            engagement_time_msec: 100,
+            session_id: sessionId,
+            ...opts.params,
           },
         },
       ],
@@ -207,29 +234,42 @@ export async function sendGA4Event(
 
     const response = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        ...(opts.userAgent && { 'User-Agent': opts.userAgent }),
+      },
       body: JSON.stringify(body),
     })
 
     if (response.status !== 204 && !response.ok) {
-      console.error(`[GA4] Erro na resposta GA4 (${eventName}):`, response.status)
+      const errText = await response.text()
+      console.error(`[GA4] Erro na resposta GA4 (${opts.eventName}):`, response.status, errText)
       return
     }
 
-    console.log(`[GA4] Evento '${eventName}' enviado com sucesso. ClientId: ${clientId}`)
+    console.log(
+      `[GA4] Evento '${opts.eventName}' enviado com sucesso. clientId=${opts.clientId} sessionId=${sessionId}`,
+    )
   } catch (err) {
-    console.error(`[GA4] Falha inesperada ao enviar '${eventName}':`, err)
+    console.error(`[GA4] Falha inesperada ao enviar '${opts.eventName}':`, err)
   }
 }
 
 export async function sendGA4Lead(payload: GA4Payload): Promise<void> {
-  const { leadId, gaCookie } = payload
-  const clientId = gaCookie ? extractGaClientId(gaCookie) : `lead_${String(leadId)}`
+  const { leadId, gaCookie, userAgent, ip } = payload
+  const clientId = gaCookie ? extractGaClientId(gaCookie) : generateClientId()
 
-  return sendGA4Event(clientId, 'generate_lead', {
-    currency: 'BRL',
-    value: 0,
-    lead_source: 'landing_page',
-    form_name: 'Lead Gramado Plazza',
+  return sendGA4Event({
+    clientId,
+    eventName: 'generate_lead',
+    userAgent,
+    ip,
+    params: {
+      currency: 'BRL',
+      value: 0,
+      lead_source: 'landing_page',
+      form_name: 'Lead Gramado Plazza',
+      external_id: String(leadId),
+    },
   })
 }
