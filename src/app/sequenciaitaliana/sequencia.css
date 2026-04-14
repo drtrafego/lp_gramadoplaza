@@ -1,0 +1,502 @@
+.gp-sequencia {
+  --wine: #722f37;
+  --wine-deep: #4a1a1f;
+  --gold: #c9a96e;
+  --gold-light: #e8d5a8;
+  --cream: #fff8f0;
+  --dark: #0a0a0a;
+  --dark-soft: #121212;
+  font-family: var(--font-inter), sans-serif;
+  color: var(--cream);
+  background: var(--dark);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.gp-sequencia *,
+.gp-sequencia *::before,
+.gp-sequencia *::after {
+  box-sizing: border-box;
+}
+
+.gp-sequencia h1,
+.gp-sequencia h2,
+.gp-sequencia h3 {
+  font-family: var(--font-playfair), serif;
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.gp-sequencia p {
+  margin: 0;
+}
+
+.gp-sequencia em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.gp-sequencia .container {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.gp-sequencia .tag {
+  display: inline-block;
+  padding: 6px 14px;
+  border: 1px solid rgba(201, 169, 110, 0.35);
+  color: var(--gold);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+/* ═══════ HERO ═══════ */
+.gp-sequencia .hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.gp-sequencia .hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.gp-sequencia .hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 10, 0.35) 0%,
+    rgba(10, 10, 10, 0.55) 45%,
+    rgba(10, 10, 10, 0.92) 100%
+  );
+}
+
+.gp-sequencia .hero-content {
+  padding: 120px 24px 56px;
+  max-width: 640px;
+  width: 100%;
+}
+
+.gp-sequencia .hero .eyebrow {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 18px;
+  font-weight: 500;
+}
+
+.gp-sequencia .hero h1 {
+  font-size: clamp(44px, 11vw, 92px);
+  margin-bottom: 22px;
+  letter-spacing: -0.01em;
+}
+
+.gp-sequencia .hero .sub {
+  font-size: 17px;
+  line-height: 1.6;
+  color: rgba(255, 248, 240, 0.82);
+  margin-bottom: 36px;
+  max-width: 440px;
+  font-weight: 300;
+}
+
+/* ═══════ BOTAO WHATSAPP ═══════ */
+.gp-sequencia .btn-wa {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 18px 32px;
+  background: #25d366;
+  color: #fff;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 999px;
+  box-shadow: 0 12px 40px rgba(37, 211, 102, 0.28);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  min-height: 56px;
+  white-space: nowrap;
+}
+
+.gp-sequencia .btn-wa:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 48px rgba(37, 211, 102, 0.4);
+}
+
+.gp-sequencia .btn-wa:active {
+  transform: translateY(0);
+}
+
+.gp-sequencia .btn-wa-lg {
+  padding: 20px 42px;
+  font-size: 14px;
+  letter-spacing: 2px;
+  min-height: 64px;
+}
+
+/* ═══════ CONCEITO ═══════ */
+.gp-sequencia .conceito {
+  padding: 72px 24px;
+  text-align: center;
+}
+
+.gp-sequencia .conceito h2 {
+  font-size: clamp(30px, 8vw, 44px);
+  margin-bottom: 24px;
+}
+
+.gp-sequencia .conceito p {
+  font-size: 17px;
+  line-height: 1.75;
+  color: rgba(255, 248, 240, 0.72);
+  max-width: 560px;
+  margin: 0 auto;
+  font-weight: 300;
+}
+
+/* ═══════ ETAPAS ═══════ */
+.gp-sequencia .etapas {
+  padding: 64px 24px 40px;
+}
+
+.gp-sequencia .etapas-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.gp-sequencia .etapas-header h2 {
+  font-size: clamp(32px, 9vw, 52px);
+}
+
+.gp-sequencia .etapas-list {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.gp-sequencia .etapa {
+  margin-bottom: 56px;
+  padding-bottom: 56px;
+  border-bottom: 1px solid rgba(201, 169, 110, 0.12);
+}
+
+.gp-sequencia .etapa:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.gp-sequencia .etapa-img {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  margin-bottom: 28px;
+  background: #151515;
+}
+
+.gp-sequencia .etapa-num {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  font-family: var(--font-playfair), serif;
+  font-size: 44px;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--gold);
+  line-height: 1;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.7);
+  z-index: 1;
+}
+
+.gp-sequencia .etapa-title {
+  font-size: 30px;
+  margin-bottom: 14px;
+  color: var(--cream);
+}
+
+.gp-sequencia .etapa-desc {
+  font-size: 16px;
+  line-height: 1.75;
+  color: rgba(255, 248, 240, 0.72);
+  font-weight: 300;
+}
+
+/* ═══════ MASSAS ═══════ */
+.gp-sequencia .massas {
+  padding: 80px 24px;
+  background: linear-gradient(
+    180deg,
+    rgba(114, 47, 55, 0.22) 0%,
+    rgba(74, 26, 31, 0.08) 100%
+  );
+  text-align: center;
+  position: relative;
+}
+
+.gp-sequencia .massas::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.gp-sequencia .massas h2 {
+  font-size: clamp(30px, 8vw, 44px);
+  margin-bottom: 10px;
+}
+
+.gp-sequencia .massas .quanto {
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  font-weight: 500;
+}
+
+.gp-sequencia .massas-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 460px;
+}
+
+.gp-sequencia .massas-list li {
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(201, 169, 110, 0.15);
+  font-family: var(--font-playfair), serif;
+  font-size: 22px;
+  font-style: italic;
+  color: var(--cream);
+}
+
+.gp-sequencia .massas-list li:last-child {
+  border-bottom: none;
+}
+
+/* ═══════ INFO ═══════ */
+.gp-sequencia .info {
+  padding: 80px 24px;
+  text-align: center;
+}
+
+.gp-sequencia .info h2 {
+  font-size: clamp(28px, 7vw, 40px);
+  margin-bottom: 48px;
+}
+
+.gp-sequencia .info-grid {
+  display: grid;
+  gap: 36px;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.gp-sequencia .info-item .label {
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.gp-sequencia .info-item .value {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--cream);
+  font-weight: 300;
+}
+
+/* ═══════ CTA FINAL ═══════ */
+.gp-sequencia .cta {
+  padding: 88px 24px;
+  background: linear-gradient(180deg, var(--dark) 0%, var(--wine-deep) 100%);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.gp-sequencia .cta::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(201, 169, 110, 0.08) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+.gp-sequencia .cta > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.gp-sequencia .cta h2 {
+  font-size: clamp(30px, 9vw, 48px);
+  margin-bottom: 18px;
+}
+
+.gp-sequencia .cta p {
+  color: rgba(255, 248, 240, 0.78);
+  font-size: 16px;
+  line-height: 1.65;
+  max-width: 420px;
+  margin: 0 auto 36px;
+  font-weight: 300;
+}
+
+/* ═══════ FOOTER ═══════ */
+.gp-sequencia .footer {
+  padding: 32px 24px 48px;
+  text-align: center;
+  font-size: 12px;
+  color: rgba(255, 248, 240, 0.4);
+  font-weight: 300;
+}
+
+.gp-sequencia .footer a {
+  color: var(--gold);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.gp-sequencia .footer a:hover {
+  opacity: 0.75;
+}
+
+/* ═══════ DESKTOP ═══════ */
+@media (min-width: 900px) {
+  .gp-sequencia .container {
+    max-width: 1080px;
+    padding: 0 48px;
+  }
+
+  .gp-sequencia .hero-content {
+    padding: 160px 48px 72px;
+    max-width: 720px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .gp-sequencia .hero .sub {
+    font-size: 19px;
+    max-width: 520px;
+  }
+
+  .gp-sequencia .conceito {
+    padding: 120px 48px;
+  }
+
+  .gp-sequencia .conceito p {
+    font-size: 19px;
+    max-width: 640px;
+  }
+
+  .gp-sequencia .etapas {
+    padding: 120px 48px 96px;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .gp-sequencia .etapas-header {
+    margin-bottom: 88px;
+  }
+
+  .gp-sequencia .etapas-list {
+    max-width: none;
+  }
+
+  .gp-sequencia .etapa {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 72px;
+    align-items: center;
+    margin-bottom: 80px;
+    padding-bottom: 80px;
+  }
+
+  .gp-sequencia .etapa.etapa-reverse {
+    direction: rtl;
+  }
+
+  .gp-sequencia .etapa.etapa-reverse > * {
+    direction: ltr;
+  }
+
+  .gp-sequencia .etapa-img {
+    margin-bottom: 0;
+    aspect-ratio: 4 / 5;
+  }
+
+  .gp-sequencia .etapa-num {
+    font-size: 72px;
+    top: 28px;
+    left: 32px;
+  }
+
+  .gp-sequencia .etapa-title {
+    font-size: 44px;
+    margin-bottom: 20px;
+  }
+
+  .gp-sequencia .etapa-desc {
+    font-size: 17px;
+    max-width: 460px;
+  }
+
+  .gp-sequencia .massas {
+    padding: 120px 48px;
+  }
+
+  .gp-sequencia .massas-list {
+    max-width: 520px;
+  }
+
+  .gp-sequencia .massas-list li {
+    font-size: 26px;
+    padding: 22px 0;
+  }
+
+  .gp-sequencia .info {
+    padding: 120px 48px;
+  }
+
+  .gp-sequencia .info-grid {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 900px;
+    gap: 48px;
+  }
+
+  .gp-sequencia .cta {
+    padding: 140px 48px;
+  }
+}
