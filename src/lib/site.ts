@@ -7,9 +7,9 @@ export const SITE_NAME = "Gramado Plazza";
 export const SITE_DESCRIPTION =
   "Restaurante italiano em Gramado especializado em sequência italiana com rodízio de seis massas artesanais, carnes na chapa, drinks autorais e sobremesa. Aberto todos os dias, 18h às 23h.";
 
-export const WHATSAPP_NUMBER = "555499376608";
+export const WHATSAPP_NUMBER = "5554999376608";
 
-export const WHATSAPP_DISPLAY = "+55 54 9937-6608";
+export const WHATSAPP_DISPLAY = "+55 54 99937-6608";
 
 export const INSTAGRAM_URL = "https://www.instagram.com/gramadoplazza/";
 export const FACEBOOK_URL = "https://www.facebook.com/gramadoplazza/";
@@ -61,7 +61,7 @@ export const RESTAURANT = {
   state: "RS",
   postalCode: "95670-000",
   country: "BR",
-  phone: "+555499376608",
+  phone: "+5554999376608",
   instagram: INSTAGRAM_URL,
   latitude: -29.3805933,
   longitude: -50.8715195,
