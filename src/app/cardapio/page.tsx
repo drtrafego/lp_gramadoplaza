@@ -5,6 +5,7 @@ import CardapioScrollFx from "@/components/cardapio-scroll-fx";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { fetchPlaceReviews } from "@/lib/google-places";
 import LeadForm from "@/components/lead-form";
+import GoogleWordmark from "@/components/google-wordmark";
 
 export const revalidate = 86400;
 import "./cardapio.css";
@@ -419,9 +420,24 @@ export default async function CardapioPage() {
           <div className="tag reveal">Avaliações</div>
           <h2 className="reveal delay-1">Quem já viveu não esquece</h2>
           <div className="rating-badge reveal delay-2">
-            <span className="rating-value">{reviews.rating.toFixed(1).replace(".", ",")}</span>
-            <span className="rating-stars" aria-hidden="true">★★★★★</span>
-            <span className="rating-meta">{reviews.count} avaliações no {reviews.source}</span>
+            <div className="rating-value">
+              {reviews.rating.toFixed(1).replace(".", ",")}
+            </div>
+            <div className="rating-stars" aria-hidden="true">★★★★★</div>
+            <div className="rating-source">
+              {reviews.source === "Google" ? (
+                <>
+                  <GoogleWordmark size={36} />
+                  <span className="rating-count">
+                    {reviews.count} avaliações
+                  </span>
+                </>
+              ) : (
+                <span className="rating-count">
+                  {reviews.count} avaliações no {reviews.source}
+                </span>
+              )}
+            </div>
           </div>
         </div>
         <div className="reviews-row">

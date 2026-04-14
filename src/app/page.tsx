@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Playfair_Display } from "next/font/google";
 import HomeScrollFx from "@/components/home-scroll-fx";
 import LeadForm from "@/components/lead-form";
+import GoogleWordmark from "@/components/google-wordmark";
 import {
   FACEBOOK_URL,
   INSTAGRAM_URL,
@@ -417,9 +418,24 @@ export default async function HomePage() {
             Quem já viveu essa experiência não esquece
           </h2>
           <div className="rating-badge reveal delay-2">
-            <span className="rating-value">{reviews.rating.toFixed(1).replace(".", ",")}</span>
-            <span className="rating-stars" aria-hidden="true">★★★★★</span>
-            <span className="rating-meta">{reviews.count} avaliações no {reviews.source}</span>
+            <div className="rating-value">
+              {reviews.rating.toFixed(1).replace(".", ",")}
+            </div>
+            <div className="rating-stars" aria-hidden="true">★★★★★</div>
+            <div className="rating-source">
+              {reviews.source === "Google" ? (
+                <>
+                  <GoogleWordmark size={36} />
+                  <span className="rating-count">
+                    {reviews.count} avaliações
+                  </span>
+                </>
+              ) : (
+                <span className="rating-count">
+                  {reviews.count} avaliações no {reviews.source}
+                </span>
+              )}
+            </div>
           </div>
           <div className="depoimentos">
             {reviews.testimonials.map((t, i) => (
