@@ -2,7 +2,14 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { DM_Sans, DM_Serif_Display } from "next/font/google";
 import CardapioScrollFx from "@/components/cardapio-scroll-fx";
-import { SITE_NAME, SITE_URL, whatsappLink } from "@/lib/site";
+import {
+  GOOGLE_REVIEWS_URL,
+  RATING,
+  SITE_NAME,
+  SITE_URL,
+  TESTIMONIALS,
+  whatsappLink,
+} from "@/lib/site";
 import "./cardapio.css";
 
 export const metadata: Metadata = {
@@ -422,41 +429,33 @@ export default function CardapioPage() {
         <div className="section-header">
           <div className="tag reveal">Avaliações</div>
           <h2 className="reveal delay-1">Quem já viveu não esquece</h2>
+          <div className="rating-badge reveal delay-2">
+            <span className="rating-value">{RATING.value.toFixed(1).replace(".", ",")}</span>
+            <span className="rating-stars" aria-hidden="true">★★★★★</span>
+            <span className="rating-meta">{RATING.count} avaliações no {RATING.source}</span>
+          </div>
         </div>
         <div className="reviews-row">
-          <div className="review reveal delay-1">
-            <div className="quote">&ldquo;</div>
-            <p>
-              Cada etapa da sequência é uma surpresa melhor que a anterior. O
-              rodízio de massas é generoso e todas estavam impecáveis.
-            </p>
-            <div className="author">
-              <div className="author-avatar" />
-              <div className="author-name">Cliente verificado</div>
+          {TESTIMONIALS.map((t, i) => (
+            <div key={t.name} className={`review reveal delay-${i + 1}`}>
+              <div className="quote">&ldquo;</div>
+              <p>{t.text}</p>
+              <div className="author">
+                <div className="author-avatar" />
+                <div className="author-name">{t.name}</div>
+              </div>
             </div>
-          </div>
-          <div className="review reveal delay-2">
-            <div className="quote">&ldquo;</div>
-            <p>
-              Ambiente sofisticado sem ser formal, atendimento que faz a gente
-              se sentir em casa. A melhor noite da viagem.
-            </p>
-            <div className="author">
-              <div className="author-avatar" />
-              <div className="author-name">Cliente verificado</div>
-            </div>
-          </div>
-          <div className="review reveal delay-3">
-            <div className="quote">&ldquo;</div>
-            <p>
-              Comi massa em Roma e em Bolonha. O Gramado Plazza compete de
-              igual para igual. Voltarei com certeza.
-            </p>
-            <div className="author">
-              <div className="author-avatar" />
-              <div className="author-name">Cliente verificado</div>
-            </div>
-          </div>
+          ))}
+        </div>
+        <div className="reviews-footer">
+          <a
+            href={GOOGLE_REVIEWS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="reviews-cta reveal delay-4"
+          >
+            Ver todas as avaliações no Google
+          </a>
         </div>
       </section>
 

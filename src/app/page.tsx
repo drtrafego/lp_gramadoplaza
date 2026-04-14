@@ -4,11 +4,14 @@ import { Playfair_Display } from "next/font/google";
 import HomeScrollFx from "@/components/home-scroll-fx";
 import {
   FACEBOOK_URL,
+  GOOGLE_REVIEWS_URL,
   INSTAGRAM_URL,
+  RATING,
   RESTAURANT,
   SITE_DESCRIPTION,
   SITE_NAME,
   SITE_URL,
+  TESTIMONIALS,
   TRIPADVISOR_URL,
   whatsappLink,
 } from "@/lib/site";
@@ -425,35 +428,28 @@ export default function HomePage() {
           <h2 className="reveal delay-1">
             Quem já viveu essa experiência não esquece
           </h2>
-          <div className="depoimentos">
-            <div className="depoimento reveal delay-1">
-              <div className="depoimento-stars">★★★★★</div>
-              <p>
-                &ldquo;Ambiente lindo, atendimento impecável e a sequência de
-                massas é simplesmente perfeita. Virou parada obrigatória toda
-                vez que venho para Gramado.&rdquo;
-              </p>
-              <div className="depoimento-author">Cliente verificado</div>
-            </div>
-            <div className="depoimento reveal delay-2">
-              <div className="depoimento-stars">★★★★★</div>
-              <p>
-                &ldquo;Melhor italiano da serra. Os drinks autorais são um
-                show à parte e a panna cotta fechou a noite com chave de
-                ouro.&rdquo;
-              </p>
-              <div className="depoimento-author">Cliente verificado</div>
-            </div>
-            <div className="depoimento reveal delay-3">
-              <div className="depoimento-stars">★★★★★</div>
-              <p>
-                &ldquo;Experiência que vale cada centavo. Atendimento atencioso
-                do início ao fim e uma comida que realmente transporta para a
-                Itália.&rdquo;
-              </p>
-              <div className="depoimento-author">Cliente verificado</div>
-            </div>
+          <div className="rating-badge reveal delay-2">
+            <span className="rating-value">{RATING.value.toFixed(1).replace(".", ",")}</span>
+            <span className="rating-stars" aria-hidden="true">★★★★★</span>
+            <span className="rating-meta">{RATING.count} avaliações no {RATING.source}</span>
           </div>
+          <div className="depoimentos">
+            {TESTIMONIALS.map((t, i) => (
+              <div key={t.name} className={`depoimento reveal delay-${i + 1}`}>
+                <div className="depoimento-stars">★★★★★</div>
+                <p>&ldquo;{t.text}&rdquo;</p>
+                <div className="depoimento-author">{t.name}</div>
+              </div>
+            ))}
+          </div>
+          <a
+            href={GOOGLE_REVIEWS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="reviews-cta reveal delay-4"
+          >
+            Ver todas as avaliações no Google
+          </a>
         </div>
       </section>
 

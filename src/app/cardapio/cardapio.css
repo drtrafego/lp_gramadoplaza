@@ -560,6 +560,61 @@
   font-weight: 400;
 }
 
+.gp-cardapio .rating-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 26px;
+  margin-top: 24px;
+  border: 1px solid rgba(201, 169, 110, 0.3);
+  border-radius: 999px;
+  background: rgba(201, 169, 110, 0.05);
+}
+
+.gp-cardapio .rating-badge .rating-value {
+  font-family: var(--font-playfair), serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.gp-cardapio .rating-badge .rating-stars {
+  color: var(--gold);
+  font-size: 16px;
+  letter-spacing: 3px;
+}
+
+.gp-cardapio .rating-badge .rating-meta {
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.gp-cardapio .reviews-footer {
+  text-align: center;
+  margin-top: 48px;
+}
+
+.gp-cardapio .reviews-cta {
+  display: inline-block;
+  padding: 14px 36px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(201, 169, 110, 0.4);
+  text-decoration: none;
+  transition: all 0.4s ease;
+}
+
+.gp-cardapio .reviews-cta:hover {
+  background: rgba(201, 169, 110, 0.08);
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
+
 .gp-cardapio .reviews-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
