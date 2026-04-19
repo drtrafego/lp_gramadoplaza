@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
-import GAPageTracker from "@/components/ga-page-tracker";
 import "./globals.css";
 
 const inter = Inter({
@@ -70,7 +69,6 @@ export const metadata: Metadata = {
 };
 
 const GTM_ID = "GTM-K77FP8ZF";
-const GA_ID = "G-874ML9FNL8";
 
 export default function RootLayout({
   children,
@@ -80,15 +78,6 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`${inter.variable} antialiased`}>
       <head>
-        <script
-          async
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`,
-          }}
-        />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -108,7 +97,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
-        <GAPageTracker />
         {children}
       </body>
     </html>
