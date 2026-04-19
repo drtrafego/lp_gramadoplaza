@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
+import GAPageTracker from "@/components/ga-page-tracker";
 import "./globals.css";
 
 const inter = Inter({
@@ -107,6 +108,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
+        <GAPageTracker />
         {children}
       </body>
     </html>
