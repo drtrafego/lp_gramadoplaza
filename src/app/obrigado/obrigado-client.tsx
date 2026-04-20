@@ -1,7 +1,14 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { WHATSAPP_NUMBER } from '@/lib/site'
+
+declare global {
+  interface Window {
+    dataLayer?: unknown[]
+  }
+}
 
 const DEFAULT_MESSAGE =
   'Olá, acabei de preencher o formulário no site. Gostaria de fazer uma reserva.'
@@ -10,6 +17,24 @@ const WA_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(DEFAU
 
 export default function ObrigadoClient() {
   const [seconds, setSeconds] = useState(3)
+  const params = useSearchParams()
+  const leadId = params.get('id') ?? undefined
+  const firedRef = useRef(false)
+
+  useEffect(() => {
+    if (firedRef.current) return
+    firedRef.current = true
+
+    setTimeout(() => {
+      window.dataLayer = window.dataLayer || []
+      window.dataLayer.push({
+        event: 'generate_lead',
+        currency: 'BRL',
+        value: 0,
+        lead_id: leadId,
+      })
+    }, 100)
+  }, [leadId])
 
   useEffect(() => {
     const countdown = window.setInterval(() => {

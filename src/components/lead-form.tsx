@@ -98,20 +98,9 @@ export default function LeadForm({ variant = 'home' }: { variant?: 'home' | 'car
       }
 
       const data = (await res.json()) as { success: boolean; leadId?: string | number }
-      const eventId = data.leadId ? String(data.leadId) : `fallback_${Date.now()}`
+      const leadId = data.leadId ? String(data.leadId) : `fallback_${Date.now()}`
 
-      if (typeof window !== 'undefined') {
-        window.dataLayer = window.dataLayer || []
-        window.dataLayer.push({
-          event: 'generate_lead',
-          lead_id: eventId,
-          lead_event_id: eventId,
-          value: 0,
-          currency: 'BRL',
-        })
-      }
-
-      router.push('/obrigado')
+      router.push(`/obrigado?id=${leadId}`)
     } catch (err) {
       console.error('[lead-form] falha:', err)
       setError('Algo deu errado. Tente de novo em alguns segundos.')

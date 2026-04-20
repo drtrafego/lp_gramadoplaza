@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Playfair_Display } from "next/font/google"
+import { Suspense } from "react"
 import ObrigadoClient from "./obrigado-client"
 
 const playfair = Playfair_Display({
@@ -32,7 +33,9 @@ export default function ObrigadoPage() {
             "radial-gradient(circle at 50% 40%, rgba(201,169,110,0.08) 0%, transparent 55%)",
         }}
       />
-      <ObrigadoClient />
+      <Suspense>
+        <ObrigadoClient />
+      </Suspense>
     </main>
   )
 }
