@@ -7,6 +7,7 @@ import { WHATSAPP_NUMBER } from '@/lib/site'
 declare global {
   interface Window {
     dataLayer?: unknown[]
+    gtag?: (...args: unknown[]) => void
   }
 }
 
@@ -31,8 +32,20 @@ export default function ObrigadoClient() {
         event: 'generate_lead',
         currency: 'BRL',
         value: 0,
+        lead_source: 'landing_page',
+        form_name: 'Lead Gramado Plazza',
         lead_id: leadId,
       })
+
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'generate_lead', {
+          currency: 'BRL',
+          value: 0,
+          lead_source: 'landing_page',
+          form_name: 'Lead Gramado Plazza',
+          lead_id: leadId,
+        })
+      }
     }, 100)
   }, [leadId])
 
