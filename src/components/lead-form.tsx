@@ -103,12 +103,11 @@ export default function LeadForm({ variant = 'home' }: { variant?: 'home' | 'car
       if (typeof window !== 'undefined') {
         window.dataLayer = window.dataLayer || []
         window.dataLayer.push({
-          event: 'lead_submit',
+          event: 'generate_lead',
           lead_id: eventId,
           lead_event_id: eventId,
-          lead_value: 0,
-          lead_currency: 'BRL',
-          lead_content_name: 'Lead Gramado Plazza',
+          value: 0,
+          currency: 'BRL',
         })
       }
 
