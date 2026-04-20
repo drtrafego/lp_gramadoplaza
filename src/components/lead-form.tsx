@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, type FormEvent } from 'react'
+import { useState, useRef, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
 
 declare global {
@@ -61,6 +61,14 @@ export default function LeadForm({ variant = 'home' }: { variant?: 'home' | 'car
   const [whatsapp, setWhatsapp] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const formStartedRef = useRef(false)
+
+  function trackFormStart() {
+    if (formStartedRef.current) return
+    formStartedRef.current = true
+    window.dataLayer = window.dataLayer || []
+    window.dataLayer.push({ event: 'form_start', form_name: 'Lead Gramado Plazza' })
+  }
 
   const accent = variant === 'cardapio' ? '#C9A96E' : '#C9A96E'
 
@@ -129,6 +137,7 @@ export default function LeadForm({ variant = 'home' }: { variant?: 'home' | 'car
           placeholder="Como podemos te chamar?"
           required
           autoComplete="name"
+          onFocus={trackFormStart}
           className="w-full rounded-none border border-white/15 bg-white/[0.03] px-5 py-4 text-base text-white placeholder:text-white/35 transition-colors focus:border-[#C9A96E] focus:outline-none"
           disabled={submitting}
         />
@@ -150,6 +159,7 @@ export default function LeadForm({ variant = 'home' }: { variant?: 'home' | 'car
           placeholder="(DDD) 00000-0000"
           required
           autoComplete="tel"
+          onFocus={trackFormStart}
           className="w-full rounded-none border border-white/15 bg-white/[0.03] px-5 py-4 text-base text-white placeholder:text-white/35 transition-colors focus:border-[#C9A96E] focus:outline-none"
           disabled={submitting}
         />
